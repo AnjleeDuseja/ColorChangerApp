@@ -1,118 +1,89 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
+import React, { useState } from 'react';
 import {
   SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
+ StatusBar,
+ View,
+ StyleSheet,
   Text,
-  useColorScheme,
-  View,
+  TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
 
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
+
 
 function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+  const [Background, setBackground]=useState("pink");
+
+  const changeBackgroundColor=()=>{
+
+    const HexValues="0123456789ABCDEF"
+    let color="#"
+    for (let i = 0; i < 6; i++) {
+     const randomIndex=Math.floor(Math.random()*16);
+     color+= HexValues[randomIndex];
+      
+    }
+    return setBackground(color)
+  }
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <>
+    <Text style={styles.HeadingText}>Color Changer App</Text>
+ <View style={{backgroundColor:Background, flex:1, justifyContent:"center", alignItems:"center"}}>
+    
+    <View >
+   <View>
+    <TouchableOpacity  onPress={changeBackgroundColor}>
+    <View style={styles.Btn}>
+      <Text style={styles.BtnText}>Press to change the color</Text>
+      </View>
+    </TouchableOpacity>
+    </View>
+   
+    {Background &&
+    <View>
+    <Text style={{ color:"#000", fontWeight:"bold"}}>
+      Hex Code of Background: {Background}
+    </Text>
+    </View>
+    
+}
+<View ></View>
+</View>
+
+   </View>
+   </>
   );
 }
 
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+const styles= StyleSheet.create({
+  HeadingText:{
+    fontSize:16,
+    fontWeight:"bold",
+  textAlign:"center"
+
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+ 
+  Btn:{
+    width:200,
+    height:50,
+    backgroundColor:"#000",
+    borderRadius:5,
+    padding:5,
+    margin:5,
+    justifyContent:"center",
+    alignItems:"center"
+   
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
+  BtnText:{
+    color:"#FFF",
+   
   },
 });
+
 
 export default App;
